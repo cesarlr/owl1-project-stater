@@ -1,4 +1,5 @@
 import { Component, tags, hooks } from "@odoo/owl";
+const { useDispatch } = hooks;
 const { xml } = tags;
 
 const SETTINGS_TEMPLATE = xml/* xml */ `
@@ -31,9 +32,8 @@ const SETTINGS_TEMPLATE = xml/* xml */ `
           </fieldset>
         </form>
         <hr/>
-        <button class="btn btn-outline-danger">Or click here to logout.</button>
+        <button class="btn btn-outline-danger" t-on-click="logout">Or click here to logout.</button>
       </div>
-
     </div>
   </div>
 </div>
@@ -41,5 +41,11 @@ const SETTINGS_TEMPLATE = xml/* xml */ `
 
 export class Settings extends Component {
   static template = SETTINGS_TEMPLATE;
+	dispatch = useDispatch();
+	logout(ev) {
+		ev.preventDefault();
+		this.dispatch("logout");
+		this.env.router.navigate({ to: "HOME" });
+	}
 }
 
